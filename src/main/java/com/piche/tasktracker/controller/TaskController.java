@@ -61,11 +61,15 @@ public class TaskController {
                     .collect(Collectors.toList());
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
-        int rowsAffected = taskService.addTask(task);
-        if (rowsAffected > 0) {
-            return new ResponseEntity<>("Task added successfully!", HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>("Failed to add task.", HttpStatus.INTERNAL_SERVER_ERROR);
+        try{
+            int rowsAffected = taskService.addTask(task);
+            if (rowsAffected > 0) {
+                return new ResponseEntity<>("Task added successfully!", HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>("Failed to add task.", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

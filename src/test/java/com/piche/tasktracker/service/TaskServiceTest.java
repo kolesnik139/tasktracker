@@ -19,6 +19,9 @@ public class TaskServiceTest {
     @Mock
     TaskRepository taskRepository;
 
+    @Mock
+    private StatusService statusService;
+
     @InjectMocks
     TaskService taskService;
 
@@ -28,16 +31,34 @@ public class TaskServiceTest {
     }
 
     @Test
-    void getTaskById_ShouldReturnTask() { // Just for example. There is actually no business logic, so nothing to test.
+    void addTask_withExistingStatusId() {
         Task task = new Task();
-        task.setId(1);
+        task.setTitle("Sample Task");
+        task.setStatusId(1);
 
-        when(taskRepository.findById(1)).thenReturn(Optional.of(task));
+        when(statusService.existsById(task.getStatusId())).thenReturn(true); // Mocking existing statusId
+        when(taskRepository.addTask(task)).thenReturn(1);
 
-        Optional<Task> result = taskService.getTaskById(1);
+        int rowsAffected = taskService.addTask(task);
 
-        assertTrue(result.isPresent());
-        assertEquals(task.getId(), result.get().getId());
+        assertEquals(1, rowsAffected);
+        verify(statusService).existsById(task.getStatusId());
+        verify(taskRepository).addTask(task);
     }
+
+    @Test
+    void addTask_withNonExistingStatusId() {
+        Task task = new Task();
+        task.setTitle("Sample Task");
+        task.setStatusId(1);
+
+        when(statusService.existsById(task.getStatusId())).thenReturn(false); // Mocking non-existing statusId
+
+        assertThrows(IllegalArgumentException.class, () -> taskService.addTask(task));
+        verify(statusService).existsById(task.getStatusId());
+        verify(taskRepository, never()).addTask(task);
+    }
+
+    // Other methods have no business logic, so nothing to test.
 
 }

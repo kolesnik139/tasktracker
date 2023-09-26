@@ -18,4 +18,10 @@ public class StatusRepository {
         String sql = "SELECT * FROM statuses";
         return jdbcTemplate.query(sql, statusRowMapper);
     }
+
+    public boolean existsById(int statusId) {
+        String sql = "SELECT COUNT(*) FROM statuses WHERE id = ?";
+        int count = jdbcTemplate.queryForObject(sql, new Object[]{statusId}, Integer.class);
+        return count > 0;
+    }
 }

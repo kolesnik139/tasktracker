@@ -16,4 +16,8 @@ public class StatusService {
     public List<Status> getStatuses() {
         return statusRepository.getStatuses();
     }
+
+    public boolean existsById(int statusId) {
+        return statusRepository.existsById(statusId);
+    }
 }
