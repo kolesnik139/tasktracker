@@ -21,12 +21,12 @@ public class TaskRepository {
     private final TaskRowMapper taskRowMapper = new TaskRowMapper();
 
     public Optional<Task> findById(int id) {
-        String sql = "SELECT * FROM tasks WHERE id = ? AND active=true";
+        String sql = "SELECT id, status_id, title, description, due_date FROM tasks WHERE id = ? AND active=true";
         return jdbcTemplate.query(sql, taskRowMapper, id).stream().findFirst();
     }
 
     public Page<Task> getTasks(Task filter, int pageNum, int pageSize, String sortField, SortOrder sortOrder) {
-        StringBuilder dataSql = new StringBuilder("SELECT * FROM tasks WHERE active=true");
+        StringBuilder dataSql = new StringBuilder("SELECT id, status_id, title, description, due_date FROM tasks WHERE active=true");
         StringBuilder countSql = new StringBuilder("SELECT COUNT(*) FROM tasks WHERE active=true");
         StringBuilder body = new StringBuilder();
         StringBuilder tail = new StringBuilder();

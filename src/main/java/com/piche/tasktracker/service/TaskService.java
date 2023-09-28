@@ -25,10 +25,6 @@ public class TaskService {
         return taskRepository.getTasks(filter, pageNum, pageSize, sortField, sortOrder);
     }
 
-//    public int addTask(Task task) {
-//        return taskRepository.addTask(task);
-//    }
-
     public int addTask(Task task) {
         if (!statusService.existsById(task.getStatusId())) {
             throw new IllegalArgumentException("Invalid statusId provided");

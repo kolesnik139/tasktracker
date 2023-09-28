@@ -15,7 +15,7 @@ public class StatusRepository {
     private final StatusRowMapper statusRowMapper = new StatusRowMapper();
 
     public List<Status> getStatuses() {
-        String sql = "SELECT * FROM statuses";
+        String sql = "SELECT id, name FROM statuses";
         return jdbcTemplate.query(sql, statusRowMapper);
     }
 
