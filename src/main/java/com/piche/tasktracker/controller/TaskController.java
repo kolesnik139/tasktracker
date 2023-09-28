@@ -75,11 +75,15 @@ public class TaskController {
 
     @PutMapping("/{taskId}/status")
     public ResponseEntity<String> updateTaskStatus(@PathVariable int taskId, @RequestParam int statusId) {
-        int rowsAffected = taskService.updateTaskStatus(taskId, statusId);
-        if (rowsAffected > 0) {
-            return new ResponseEntity<>("Task status updated successfully!", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Failed to update task status. Task not found.", HttpStatus.NOT_FOUND);
+        try{
+            int rowsAffected = taskService.updateTaskStatus(taskId, statusId);
+            if (rowsAffected > 0) {
+                return new ResponseEntity<>("Task status updated successfully!", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Failed to update task status. Task not found.", HttpStatus.NOT_FOUND);
+            }
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

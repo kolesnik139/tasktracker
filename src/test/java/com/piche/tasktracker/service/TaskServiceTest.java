@@ -59,6 +59,31 @@ public class TaskServiceTest {
         verify(taskRepository, never()).addTask(task);
     }
 
+    @Test
+    public void updateTaskStatus_withExistingStatusId() {
+        int taskId = 1;
+        int statusId = 2;
+
+        when(statusService.existsById(statusId)).thenReturn(true);
+        when(taskRepository.updateTaskStatus(taskId, statusId)).thenReturn(1);
+
+        int result = taskService.updateTaskStatus(taskId, statusId);
+
+        assertEquals(1, result);
+    }
+
+    @Test
+    public void updateTaskStatus_withNonExistingStatusId() {
+        int taskId = 1;
+        int statusId = 3;
+
+        when(statusService.existsById(statusId)).thenReturn(false);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            taskService.updateTaskStatus(taskId, statusId);
+        });
+    }
+
     // Other methods have no business logic, so nothing to test.
 
 }

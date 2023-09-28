@@ -37,6 +37,9 @@ public class TaskService {
     }
 
     public int updateTaskStatus(int taskId, int statusId) {
+        if (!statusService.existsById(statusId)) {
+            throw new IllegalArgumentException("Invalid statusId provided");
+        }
         return taskRepository.updateTaskStatus(taskId, statusId);
     }
 }
