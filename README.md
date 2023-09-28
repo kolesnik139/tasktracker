@@ -6,11 +6,12 @@ you should change the database connection settings in application.properties.
 ## How to Run
 
 * Clone this repository
-* Make sure you are using JRE 17 or higher
-* Open console and run:
+* Make sure you are using JDK 17 or higher, and Maven 3.x
+* Open console and run one by one:
 ```
 cd project_root_folder
-java -jar tasktracker-0.0.1-SNAPSHOT.jar
+mvn clean package
+java -jar target\tasktracker-0.0.1-SNAPSHOT.jar
 ```
 * Check the stdout to make sure no exceptions are thrown
 

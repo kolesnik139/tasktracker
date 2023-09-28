@@ -1,7 +1,5 @@
 package com.piche.tasktracker.model;
 
-import java.util.Date;
-
 public class Status {
     private int id;
     private String name;
