@@ -9,7 +9,7 @@ import java.util.Date;
 public class Task {
     private int id;
     @Min(value = 1, message = "statusId should be a positive integer")
-    private int statusId = 1; // "To Do" by default
+    private int statusId;
     @NotBlank(message = "Title is required")
     @Size(max = 255, message = "Title should not exceed 255 characters")
     private String title;
