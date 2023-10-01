@@ -11,8 +11,19 @@ you should change the database connection settings in application.properties.
 ```
 cd project_root_folder
 mvn clean package
+```
+* To run it with java use next command: 
+```
 java -jar target\tasktracker-0.0.1-SNAPSHOT.jar
 ```
+* To run it with Docker: Make sure Docker Desktop 2.0+ for Windows and Mac, or Docker Engine 18.09+ for Linux installed.
+
+Use next commands:
+```
+docker build -t tasktracker_img .
+docker run -p 8080:8080 tasktracker_img
+```
+
 * Check the stdout to make sure no exceptions are thrown
 
 Once the application runs you should see something like this
